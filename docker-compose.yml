@@ -1,0 +1,44 @@
+version: '3'
+services:
+  master-db:
+    image: 'postgres'
+    container_name: master-db
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'b00t200k4'
+      POSTGRES_DB: 'bootzooka'
+    volumes:
+      - ./master.config:/etc/postgresql/postgresql.conf
+      - ./init-master.sh:/docker-entrypoint-initdb.d/init-master.sh
+      - ./master-data:/var/lib/postgresql/data
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+  backup:
+    image: 'postgres'
+    command: pg_basebackup -h master-db -D /var/lib/postgresql/data -U postgres -P -v  -R -X stream -C -S pgstandby1
+    volumes:
+      - ./slave-data:/var/lib/postgresql/data
+  slavedb:
+    image: 'postgres'
+    depends_on:
+      - master-db
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'b00t200k4'
+      PGAPPNAME: 'my-slave1'
+    volumes:
+      - ./slave-data:/var/lib/postgresql/data
+  slavedb2:
+    image: 'postgres'
+    depends_on:
+      - master-db
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'b00t200k4'
+      PGAPPNAME: 'my-slave2'
+    volumes:
+      - ./slave-data2:/var/lib/postgresql/data
+  backup2:
+    image: 'postgres'
+    command: pg_basebackup -h master-db -D /var/lib/postgresql/data -U postgres -P -v  -R -X stream -C -S pgstandby2
+    volumes:
+      - ./slave-data2:/var/lib/postgresql/data
