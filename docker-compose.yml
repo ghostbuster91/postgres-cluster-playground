@@ -5,7 +5,7 @@ services:
     container_name: master-db
     environment:
       POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'b00t200k4'
+      POSTGRES_PASSWORD: 'qweqwe'
       POSTGRES_DB: 'bootzooka'
     volumes:
       - ./master.config:/etc/postgresql/postgresql.conf
@@ -23,7 +23,6 @@ services:
       - master-db
     environment:
       POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'b00t200k4'
       PGAPPNAME: 'my-slave1'
     volumes:
       - ./slave-data:/var/lib/postgresql/data
@@ -33,7 +32,6 @@ services:
       - master-db
     environment:
       POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'b00t200k4'
       PGAPPNAME: 'my-slave2'
     volumes:
       - ./slave-data2:/var/lib/postgresql/data
