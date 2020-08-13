@@ -16,6 +16,7 @@
 4. start slave nodes
 
   `docker-compose up -d slave-db`
+  
   `docker-compose up -d slave-db2`
 
 5. stop master node
