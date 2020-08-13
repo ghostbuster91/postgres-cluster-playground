@@ -32,4 +32,4 @@
   2. `insert into example_data(content) values('first entry');`
 - login into slave-db and verify that the data was replicated
   1. `docker-compose exec slave-db psql -U postgres`
-  2. `select * from example_data`
+  2. `select * from example_data;`
